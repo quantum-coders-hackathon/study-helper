@@ -16,54 +16,91 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/button8"
+        <TextView
+            android:id="@+id/txtStudyTimerStudy"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="15dp"
+            android:padding="13dp"
+            android:background="@drawable/selector_with_default_state"
+            android:layout_margin="6dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:gravity="center"
             android:text="Study" />
 
-        <Button
-            android:id="@+id/button9"
+        <TextView
+            android:id="@+id/txtStudyTimerBreak"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="15dp"
+            android:padding="13dp"
+            android:layout_margin="8dp"
+            android:textSize="20sp"
+            android:background="@drawable/selector"
+            android:textStyle="bold"
+            android:gravity="center"
             android:text="Break" />
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/txtStudyTimerTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="25:00"
+        android:text="00:25:00"
+        android:background="@drawable/selector"
+        android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/imgStudyTimerStart"
+        android:layout_width="78dp"
+        android:layout_height="86dp"
         android:src="@drawable/outline_play_arrow_24"
+        android:background="@drawable/selector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/txtStudyTimerTime" />
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/imgStudyTimerPause"
+        android:layout_width="78dp"
+        android:layout_height="86dp"
         android:src="@android:drawable/ic_media_pause"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/selector"
         app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/txtStudyTimerTime" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="50dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/border"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+        app:layout_constraintTop_toBottomOf="@+id/imgStudyTimerStart"
+        tools:layout_editor_absoluteX="70dp">
+
+        <TextView
+            android:id="@+id/txtStudyTimerMotivationalQuote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="19sp"
+            android:text="This is Motivation Quote \n ~ Human" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,10 +112,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="Lock app to limit distractions"
-            android:textSize="17sp" />
+            android:textSize="20sp" />
 
         <Switch
-            android:id="@+id/switch1"
+            android:id="@+id/switchStudyTimerLockApps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
