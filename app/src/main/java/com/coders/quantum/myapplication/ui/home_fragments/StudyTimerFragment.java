@@ -99,6 +99,9 @@ public class StudyTimerFragment extends Fragment {
             selectedTimeInMillis = selectedTimeInMinutes * 60 * 1000;
             remainingTimeInMillis = selectedTimeInMinutes * 60 * 1000;
 
+            linearLayoutStudyTimerMotivationalQuote.setVisibility(View.VISIBLE);
+            j2048View.setVisibility(View.GONE);
+
             updateTimeDisplay(remainingTimeInMillis);
         });
 
@@ -108,6 +111,9 @@ public class StudyTimerFragment extends Fragment {
             isBreak = true;
             selectedTimeInMillis = selectedBreakTimeInMinutes * 60 * 1000;
             remainingTimeInMillis = selectedBreakTimeInMinutes * 60 * 1000;
+
+            linearLayoutStudyTimerMotivationalQuote.setVisibility(View.GONE);
+            j2048View.setVisibility(View.VISIBLE);
 
             updateTimeDisplay(remainingTimeInMillis);
         });
