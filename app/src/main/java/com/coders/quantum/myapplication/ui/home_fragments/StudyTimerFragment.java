@@ -47,8 +47,8 @@ public class StudyTimerFragment extends Fragment {
     }
 
     private int[] musicFiles = {R.raw.carol_of_the_bells, R.raw.monoman, R.raw.relaxing_piano};
-    public int selectedTimeInMinutes = 1;
-    public int selectedBreakTimeInMinutes = 1;
+    public int selectedTimeInMinutes = 25;
+    public int selectedBreakTimeInMinutes = 5;
     CountDownTimer countDownTimer;
     long selectedTimeInMillis = selectedTimeInMinutes * 60 * 1000;
     long remainingTimeInMillis = selectedTimeInMinutes * 60 * 1000;
