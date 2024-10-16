@@ -2,19 +2,12 @@ package com.coders.quantum.myapplication;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-
-import com.coders.quantum.myapplication.ui.main.SectionsPagerAdapter;
 import com.coders.quantum.myapplication.databinding.ActivityHomeBinding;
+import com.coders.quantum.myapplication.ui.main.SectionsPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -39,6 +32,27 @@ public class HomeActivity extends AppCompatActivity {
         tabs.getTabAt(3).setIcon(R.drawable.baseline_watch_later_24);  // Icon for Tab 4
 
         viewPager.setCurrentItem(1);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 3) {
+//                    setTitle("Study Timer");
+                } else {
+//                    setTitle("Study Helper");
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 }
