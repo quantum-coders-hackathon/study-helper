@@ -3,6 +3,7 @@ package com.coders.quantum.myapplication.ui.home_fragments;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -14,12 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.coders.quantum.myapplication.R;
+import com.coders.quantum.myapplication.ui.game.J2048View;
 
 import java.util.Random;
 
@@ -31,8 +34,11 @@ public class StudyTimerFragment extends Fragment {
     }
 
     TextView txtStudyTimerStudy,txtStudyTimerBreak,txtStudyTimerTime,txtStudyTimerMotivationalQuote;
-    Switch switchStudyTimerLockApps;
+    Switch switchStudyTimerLockApps, switchStudyTimerMusic;
     ImageView imgStudyTimerStart, imgStudyTimerPause;
+    J2048View j2048View;
+    LinearLayout linearLayoutStudyTimerMotivationalQuote;
+    MediaPlayer player;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,7 @@ public class StudyTimerFragment extends Fragment {
 
     }
 
+    private int[] musicFiles = {R.raw.carol_of_the_bells, R.raw.monoman, R.raw.relaxing_piano};
     public int selectedTimeInMinutes = 25;
     public int selectedBreakTimeInMinutes = 5;
     CountDownTimer countDownTimer;
@@ -79,6 +86,11 @@ public class StudyTimerFragment extends Fragment {
         switchStudyTimerLockApps = v.findViewById(R.id.switchStudyTimerLockApps);
         imgStudyTimerStart = v.findViewById(R.id.imgStudyTimerStart);
         imgStudyTimerPause = v.findViewById(R.id.imgStudyTimerPause);
+        j2048View = v.findViewById(R.id.puzzle);
+        linearLayoutStudyTimerMotivationalQuote = v.findViewById(R.id.linearLayoutStudyTimerMotivationalQuote);
+        switchStudyTimerMusic = v.findViewById(R.id.switchStudyTimerMusic);
+
+        j2048View.readData();
 
         txtStudyTimerStudy.setOnClickListener(view->{
             txtStudyTimerStudy.setBackgroundResource(R.drawable.selector_with_default_state);
@@ -86,6 +98,9 @@ public class StudyTimerFragment extends Fragment {
             isBreak = false;
             selectedTimeInMillis = selectedTimeInMinutes * 60 * 1000;
             remainingTimeInMillis = selectedTimeInMinutes * 60 * 1000;
+
+            linearLayoutStudyTimerMotivationalQuote.setVisibility(View.VISIBLE);
+            j2048View.setVisibility(View.GONE);
 
             updateTimeDisplay(remainingTimeInMillis);
         });
@@ -96,6 +111,9 @@ public class StudyTimerFragment extends Fragment {
             isBreak = true;
             selectedTimeInMillis = selectedBreakTimeInMinutes * 60 * 1000;
             remainingTimeInMillis = selectedBreakTimeInMinutes * 60 * 1000;
+
+            linearLayoutStudyTimerMotivationalQuote.setVisibility(View.GONE);
+            j2048View.setVisibility(View.VISIBLE);
 
             updateTimeDisplay(remainingTimeInMillis);
         });
@@ -160,6 +178,9 @@ public class StudyTimerFragment extends Fragment {
                         txtStudyTimerTime.setClickable(true);
                         switchStudyTimerLockApps.setClickable(true);
 
+                        j2048View.setVisibility(View.VISIBLE);
+                        linearLayoutStudyTimerMotivationalQuote.setVisibility(View.GONE);
+
 //                        Toast.makeText(view.getContext(), " "+selectedBreakTimeInMinutes+" "+remainingTimeInMillis, Toast.LENGTH_SHORT).show();
                     } else {
                         isBreak = false;
@@ -168,6 +189,10 @@ public class StudyTimerFragment extends Fragment {
 
                         selectedTimeInMillis = selectedTimeInMinutes * 60 * 1000;
                         remainingTimeInMillis = selectedTimeInMinutes * 60 * 1000;
+
+                        j2048View.setVisibility(View.GONE);
+                        j2048View.saveData();
+                        linearLayoutStudyTimerMotivationalQuote.setVisibility(View.VISIBLE);
                     }
                     updateTimeDisplay(remainingTimeInMillis);
 //                    txtStudyTimerTime.setText("00:05:00");
@@ -213,6 +238,18 @@ public class StudyTimerFragment extends Fragment {
                 }
             }
         });
+
+        switchStudyTimerMusic.setOnCheckedChangeListener(((buttonView, isChecked) -> {
+            if (isChecked) {
+                int randomIndex = new Random().nextInt(musicFiles.length);
+                player = MediaPlayer.create(getActivity(), musicFiles[randomIndex]);
+                player.setLooping(true);
+                player.start();
+            } else {
+                player.release();
+                player = null;
+            }
+        }));
 
         updateQuote();
         startQuoteUpdater();
