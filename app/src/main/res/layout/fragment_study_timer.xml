@@ -42,6 +42,26 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/txtStudyTimerTime"
+        app:layout_constraintEnd_toStartOf="@+id/txtStudyTimerTime"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <Switch
+            android:id="@+id/switchStudyTimerMusic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="Music?" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/txtStudyTimerTime"
         android:layout_width="wrap_content"
@@ -75,7 +95,17 @@
         android:visibility="invisible"
         app:layout_constraintTop_toBottomOf="@+id/txtStudyTimerTime" />
 
+
+    <com.coders.quantum.myapplication.ui.game.J2048View
+        android:id="@+id/puzzle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+        app:layout_constraintTop_toBottomOf="@+id/imgStudyTimerStart" />
+
     <LinearLayout
+        android:id="@+id/linearLayoutStudyTimerMotivationalQuote"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="50dp"
