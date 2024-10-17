@@ -1,14 +1,17 @@
 package com.coders.quantum.myapplication.ui.home_fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import androidx.fragment.app.Fragment;
 
 import com.coders.quantum.myapplication.R;
+import com.coders.quantum.myapplication.ui.study_methods.HomeworkActivity;
+import com.coders.quantum.myapplication.ui.study_methods.QuizzesActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,10 +60,27 @@ public class StudyMethodFragment extends Fragment {
         }
     }
 
+    Button btnHomework, btnQuizzes;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_study_method, container, false);
+        View v = inflater.inflate(R.layout.fragment_study_method, container, false);
+
+        btnQuizzes = v.findViewById(R.id.btnStudyMethodQuizzes);
+        btnHomework = v.findViewById(R.id.btnStudyMethodHomework);
+
+        btnHomework.setOnClickListener(view->{
+            Intent intent = new Intent(getActivity(), HomeworkActivity.class);
+            startActivity(intent);
+        });
+
+        btnQuizzes.setOnClickListener(view->{
+            Intent intent = new Intent(getActivity(), QuizzesActivity.class);
+            startActivity(intent);
+        });
+
+        return v;
     }
 }

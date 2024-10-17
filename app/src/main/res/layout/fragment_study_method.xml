@@ -52,7 +52,7 @@ tools:context=".ui.home_fragments.StudyMethodFragment">
     app:layout_constraintTop_toBottomOf="@+id/button4" />
 
 <Button
-    android:id="@+id/button6"
+    android:id="@+id/btnStudyMethodQuizzes"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Quizzes"
@@ -61,11 +61,11 @@ tools:context=".ui.home_fragments.StudyMethodFragment">
     app:layout_constraintTop_toBottomOf="@+id/button5" />
 
 <Button
-    android:id="@+id/button7"
+    android:id="@+id/btnStudyMethodHomework"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Find relevant theories to your homework"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/button6" />
+    app:layout_constraintTop_toBottomOf="@+id/btnStudyMethodQuizzes" />
 </androidx.constraintlayout.widget.ConstraintLayout>
