@@ -1,13 +1,19 @@
 package com.coders.quantum.myapplication.ui.home_fragments;
 
+import android.Manifest;
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
@@ -16,9 +22,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.coders.quantum.myapplication.R;
 
@@ -93,6 +101,46 @@ public class StudyGoalFragment extends Fragment {
 
         EditText timeInput = view.findViewById(R.id.timeInput);
         Button addTimeButton = view.findViewById(R.id.addTimeButton);
+
+        TimePicker startTimePicker = view.findViewById(R.id.reminderStartTime);
+        TimePicker endTimePicker = view.findViewById(R.id.reminderEndTime);
+
+        CheckBox reminderSunday = view.findViewById(R.id.reminderSunday);
+        CheckBox reminderMonday = view.findViewById(R.id.reminderMonday);
+        CheckBox reminderTuesday = view.findViewById(R.id.reminderTuesday);
+        CheckBox reminderWednesday = view.findViewById(R.id.reminderWednesday);
+        CheckBox reminderThursday = view.findViewById(R.id.reminderThursday);
+        CheckBox reminderFriday = view.findViewById(R.id.reminderFriday);
+        CheckBox reminderSaturday = view.findViewById(R.id.reminderSaturday);
+
+        Button saveButton = view.findViewById(R.id.saveReminderSettingsButton);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int startHour = startTimePicker.getHour();
+                int startMinute = startTimePicker.getMinute();
+                int endHour = endTimePicker.getHour();
+                int endMinute = endTimePicker.getMinute();
+
+                SharedPreferences sharedPref = getActivity().getSharedPreferences("StudyPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("startHour", startHour);
+                editor.putInt("startMinute", startMinute);
+                editor.putInt("endHour", endHour);
+                editor.putInt("endMinute", endMinute);
+
+                editor.putBoolean("reminderSunday", reminderSunday.isChecked());
+                editor.putBoolean("reminderMonday", reminderMonday.isChecked());
+                editor.putBoolean("reminderTuesday", reminderTuesday.isChecked());
+                editor.putBoolean("reminderWednesday", reminderWednesday.isChecked());
+                editor.putBoolean("reminderThursday", reminderThursday.isChecked());
+                editor.putBoolean("reminderFriday", reminderFriday.isChecked());
+                editor.putBoolean("reminderSaturday", reminderSaturday.isChecked());
+
+                editor.apply();
+            }
+        });
 
         addTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -238,7 +286,7 @@ public class StudyGoalFragment extends Fragment {
                 calendar.set(Calendar.DAY_OF_WEEK, i + 1);
 
                 Intent intent = new Intent(getContext(), ReminderReceiver.class);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), i , intent, 0);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), i , intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
                 alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
@@ -248,21 +296,87 @@ public class StudyGoalFragment extends Fragment {
         }
 
     }
+    private void setHourlyReminders(int startHour, int startMinute, int endHour, int endMinute, boolean[] selectedDays){
+        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, startHour);
+        calendar.set(Calendar.MINUTE, startMinute);
+        calendar.set(Calendar.SECOND, 0);
+
+        Intent intent = new Intent(getContext(), ReminderReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        long interval = AlarmManager.INTERVAL_HOUR;
+
+        for (int i = 0 ; i < selectedDays.length; i++){
+            if (selectedDays[i]){
+                calendar.set(Calendar.DAY_OF_WEEK, i + 1);
+
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), interval, pendingIntent);
+            }
+        }
+
+        cancelReminderAfterEndTime(endHour, endMinute);
+    }
 
     public class ReminderReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "StudyReminderChannel")
-                    .setSmallIcon(R.drawable.ic_launcher_background)
-                    .setContentTitle("Study Reminder")
-                    .setContentText("Time to study!")
-                    .setPriority(NotificationCompat.PRIORITY_HIGH);
 
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-            notificationManager.notify(0 , builder.build());
+            createNotificationChannel(context);
+
+            Calendar now = Calendar.getInstance();
+            int currentHour = now.get(Calendar.HOUR_OF_DAY);
+            int currentMinute = now.get(Calendar.MINUTE);
+
+            SharedPreferences sharedPref = context.getSharedPreferences("StudyPrefs", Context.MODE_PRIVATE);
+            int startHour = sharedPref.getInt("startHour", 9);
+            int endHour = sharedPref.getInt("endHour", 17);
+
+            if (currentHour >= startHour && currentHour < endHour){
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "StudyReminderChannel")
+                        .setSmallIcon(R.drawable.ic_launcher_background)
+                        .setContentTitle("Study Reminder")
+                        .setContentText("Time to Study!")
+                        .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
+                notificationManager.notify(1, builder.build());
+            }
+        }
+
+        private void createNotificationChannel(Context context){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                CharSequence name = "Study Reminder Channel";
+                String description = "Channel for Study Reminders";
+                int importance = NotificationManager.IMPORTANCE_HIGH;
+                NotificationChannel channel = new NotificationChannel("StudyReminderChannel", name, importance);
+                channel.setDescription(description);
+
+                NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+                notificationManager.createNotificationChannel(channel);
+
+            }
+
         }
 
 
+    }
+
+
+    private void cancelReminderAfterEndTime(int endHour, int endMinute){
+        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, endHour);
+        calendar.set(Calendar.MINUTE, endMinute);
+        calendar.set(Calendar.SECOND, 0);
+
+        Intent intent = new Intent(getContext(), ReminderReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        alarmManager.cancel(pendingIntent);
     }
 
     private void setDailyGoalForDay(String day, int goalMinutes){
