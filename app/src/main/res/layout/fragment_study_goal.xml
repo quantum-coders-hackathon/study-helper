@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/saveReminderSettingsButton"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home_fragments.StudyGoalFragment">
@@ -20,32 +20,36 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.829" />
 
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="50dp"
         android:layout_marginRight="25dp"
         android:max="100"
-        android:progressTint="#ADD8E6"
+        android:progressBackgroundTint="#302E32"
+        android:progressDrawable="@drawable/progress_bar_custom"
+        android:progressTint="#c3b1e1"
+        app:layout_constraintBottom_toTopOf="@+id/timeLeftTextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.66"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <EditText
         android:id="@+id/timeInput"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="19dp"
         android:hint="Enter Time Studied (min)"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.077"
+        app:layout_constraintBottom_toTopOf="@+id/setDailyGoalsMins"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar"
-        app:layout_constraintVertical_bias="0.195" />
+        app:layout_constraintTop_toBottomOf="@+id/streakTextView" />
 
     <Button
         android:id="@+id/addTimeButton"
@@ -54,31 +58,35 @@
         android:text="Add Time"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.113"
         app:layout_constraintStart_toEndOf="@+id/timeInput"
         app:layout_constraintTop_toBottomOf="@+id/progressBar"
-        app:layout_constraintVertical_bias="0.196" />
+        app:layout_constraintVertical_bias="0.076" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearLayout4"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/progressBar">-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
     <TextView
         android:id="@+id/streakTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Current Streak: 0"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/timeInput"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.082"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        app:layout_constraintTop_toBottomOf="@+id/progressBar"
+        app:layout_constraintVertical_bias="0.142" />
 
     <CheckBox
         android:id="@+id/reminderSunday"
@@ -180,50 +188,59 @@
         android:id="@+id/timeLeftTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="24dp"
         android:text="Minutes Left: 0"
-        app:layout_constraintBottom_toTopOf="@+id/streakTextView"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/addTimeButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.929"
+        app:layout_constraintHorizontal_bias="0.885"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/progressBar"
-        app:layout_constraintVertical_bias="0.312" />
+        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
     <EditText
         android:id="@+id/sundayGoal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="136dp"
-        android:layout_marginEnd="54dp"
+        android:layout_marginEnd="60dp"
         android:hint="Sunday Goal (min)"
         app:layout_constraintBottom_toTopOf="@+id/mondayGoal"
         app:layout_constraintEnd_toStartOf="@+id/thursdayGoal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/streakTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/streakTextView"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/mondayGoal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="56dp"
         android:hint="Monday Goal (min)"
+        app:layout_constraintBottom_toTopOf="@+id/tuesdayGoal"
+        app:layout_constraintEnd_toStartOf="@+id/fridayGoal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sundayGoal" />
 
     <EditText
         android:id="@+id/tuesdayGoal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="54dp"
         android:hint="Tuesday Goal (min)"
+        app:layout_constraintBottom_toTopOf="@+id/wednesdayGoal"
+        app:layout_constraintEnd_toStartOf="@+id/saturdayGoal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mondayGoal" />
 
     <EditText
         android:id="@+id/wednesdayGoal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
         android:hint="Wednesday Goal (min)"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tuesdayGoal" />
@@ -231,17 +248,17 @@
     <EditText
         android:id="@+id/thursdayGoal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginStart="224dp"
-        android:layout_marginTop="272dp"
+        android:layout_marginTop="224dp"
         android:hint="Thursday Goal (min)"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/fridayGoal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="151dp"
+        android:layout_height="48dp"
         android:layout_marginStart="224dp"
         android:hint="Friday Goal (min)"
         app:layout_constraintStart_toStartOf="parent"
@@ -250,7 +267,7 @@
     <EditText
         android:id="@+id/saturdayGoal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginStart="224dp"
         android:layout_marginTop="4dp"
         android:hint="Saturday Goal (min)"
@@ -269,9 +286,11 @@
         app:layout_constraintBottom_toTopOf="@+id/reminderStartTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/wednesdayGoal"
-        app:layout_constraintTop_toBottomOf="@+id/saturdayGoal" />
+        app:layout_constraintTop_toBottomOf="@+id/saturdayGoal"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
+        android:id="@+id/saveReminderSettingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Set Reminders"
@@ -281,6 +300,55 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.992" />
+
+    <TextView
+        android:id="@+id/setDailyGoalsMins"
+        android:layout_width="367dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="9dp"
+        android:text="Choose Individual Goals For Each Day:"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/thursdayGoal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addTimeButton" />
+
+    <TextView
+        android:id="@+id/startTimeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="121dp"
+        android:layout_marginBottom="8dp"
+        android:text="Start Time"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/reminderStartTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.313"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wednesdayGoal" />
+
+    <TextView
+        android:id="@+id/endTimeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="121dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="8dp"
+        android:text="End Time"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/reminderEndTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.671"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setGoalsButton"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
