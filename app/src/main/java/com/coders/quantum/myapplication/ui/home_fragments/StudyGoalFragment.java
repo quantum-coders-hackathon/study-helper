@@ -333,17 +333,27 @@ public class StudyGoalFragment extends Fragment {
             int startHour = sharedPref.getInt("startHour", 9);
             int endHour = sharedPref.getInt("endHour", 17);
 
-            if (currentHour >= startHour && currentHour < endHour){
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "StudyReminderChannel")
-                        .setSmallIcon(R.drawable.ic_launcher_background)
-                        .setContentTitle("Study Reminder")
-                        .setContentText("Time to Study!")
-                        .setPriority(NotificationCompat.PRIORITY_HIGH);
 
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
-                notificationManager.notify(1, builder.build());
+            if (context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                return;
             }
+            else{
+                if (currentHour >= startHour && currentHour < endHour){
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "StudyReminderChannel")
+                            .setSmallIcon(R.drawable.ic_launcher_background)
+                            .setContentTitle("Study Reminder")
+                            .setContentText("Time to Study!")
+                            .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
+                    notificationManager.notify(1, builder.build());
+                }
+            }
+
+
+
         }
 
         private void createNotificationChannel(Context context){
