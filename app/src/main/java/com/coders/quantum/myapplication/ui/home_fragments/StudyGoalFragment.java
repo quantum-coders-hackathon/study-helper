@@ -12,12 +12,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +21,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.fragment.app.Fragment;
 
 import com.coders.quantum.myapplication.R;
 
@@ -105,6 +103,9 @@ public class StudyGoalFragment extends Fragment {
         TimePicker startTimePicker = view.findViewById(R.id.reminderStartTime);
         TimePicker endTimePicker = view.findViewById(R.id.reminderEndTime);
 
+        startTimePicker.setIs24HourView(true);
+        endTimePicker.setIs24HourView(true);
+
         CheckBox reminderSunday = view.findViewById(R.id.reminderSunday);
         CheckBox reminderMonday = view.findViewById(R.id.reminderMonday);
         CheckBox reminderTuesday = view.findViewById(R.id.reminderTuesday);
@@ -174,25 +175,22 @@ public class StudyGoalFragment extends Fragment {
         EditText saturdayGoal = view.findViewById(R.id.saturdayGoal);
         Button setGoalsButton = view.findViewById(R.id.setGoalsButton);
 
-        setGoalsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int sundayGoalValue = Integer.parseInt(sundayGoal.getText().toString());
-                int mondayGoalValue = Integer.parseInt(mondayGoal.getText().toString());
-                int tuesdayGoalValue = Integer.parseInt(tuesdayGoal.getText().toString());
-                int wednesdayGoalValue = Integer.parseInt(wednesdayGoal.getText().toString());
-                int thursdayGoalValue = Integer.parseInt(thursdayGoal.getText().toString());
-                int fridayGoalValue = Integer.parseInt(fridayGoal.getText().toString());
-                int saturdayGoalValue = Integer.parseInt(saturdayGoal.getText().toString());
+        setGoalsButton.setOnClickListener(v -> {
+            int sundayGoalValue = Integer.parseInt(sundayGoal.getText().toString());
+            int mondayGoalValue = Integer.parseInt(mondayGoal.getText().toString());
+            int tuesdayGoalValue = Integer.parseInt(tuesdayGoal.getText().toString());
+            int wednesdayGoalValue = Integer.parseInt(wednesdayGoal.getText().toString());
+            int thursdayGoalValue = Integer.parseInt(thursdayGoal.getText().toString());
+            int fridayGoalValue = Integer.parseInt(fridayGoal.getText().toString());
+            int saturdayGoalValue = Integer.parseInt(saturdayGoal.getText().toString());
 
-                setDailyGoalForDay("sunday", sundayGoalValue);
-                setDailyGoalForDay("monday", mondayGoalValue);
-                setDailyGoalForDay("tuesday", tuesdayGoalValue);
-                setDailyGoalForDay("wednesday", wednesdayGoalValue);
-                setDailyGoalForDay("thursday", thursdayGoalValue);
-                setDailyGoalForDay("friday", fridayGoalValue);
-                setDailyGoalForDay("saturday", saturdayGoalValue);
-            }
+            setDailyGoalForDay("sunday", sundayGoalValue);
+            setDailyGoalForDay("monday", mondayGoalValue);
+            setDailyGoalForDay("tuesday", tuesdayGoalValue);
+            setDailyGoalForDay("wednesday", wednesdayGoalValue);
+            setDailyGoalForDay("thursday", thursdayGoalValue);
+            setDailyGoalForDay("friday", fridayGoalValue);
+            setDailyGoalForDay("saturday", saturdayGoalValue);
         });
 
         return view;
