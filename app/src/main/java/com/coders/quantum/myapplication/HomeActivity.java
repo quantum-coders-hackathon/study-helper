@@ -1,5 +1,7 @@
 package com.coders.quantum.myapplication;
 
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +28,7 @@ public class HomeActivity extends AppCompatActivity {
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
 
+
         tabs.getTabAt(0).setIcon(R.drawable.star);  // Icon for Tab 1
         tabs.getTabAt(1).setIcon(R.drawable.home_icon);  // Icon for Tab 2
         tabs.getTabAt(2).setIcon(R.drawable.sketchbook);  // Icon for Tab 3
@@ -33,26 +36,16 @@ public class HomeActivity extends AppCompatActivity {
 
         viewPager.setCurrentItem(1);
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkCallingOrSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 101);
             }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (position == 3) {
-//                    setTitle("Study Timer");
-                } else {
-//                    setTitle("Study Helper");
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+        }
 
     }
+
+
+
+
+
 }
