@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="250dp"
+        android:layout_height="109dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="597dp"
+        android:layout_marginEnd="87dp"
+        android:layout_marginBottom="46dp"
+        android:text="25 : 5" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="359dp"
+        android:layout_height="129dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="527dp"
+        android:layout_marginBottom="23dp"
+        android:text="Pomodoro" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutStudyTimerMotivationalQuote"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="50dp"
+        android:background="@drawable/border"
+        android:gravity="center"
+        android:orientation="vertical" />
+
+    <ProgressBar
+        android:id="@+id/horizontal_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="236dp"
+        android:max="100"
+        android:progress="50"
+        android:progressTint="@color/colorAccent" />
+
+    <TextView
+        android:id="@+id/txtStudyTimerMotivationalQuote"
+        android:layout_width="870dp"
+        android:layout_height="409dp"
+        android:layout_below="@id/horizontal_progress_bar"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="192dp"
+        android:layout_marginEnd="13dp"
+        android:gravity="center"
+        android:text="This is Motivation Quote \n ~ Human"
+        android:textSize="19sp" />
+
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtStudyTimerMotivationalQuote"
+        android:layout_marginTop="66dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Favorite Study Method" />
+
+    <EditText
+        android:id="@+id/editTextTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView5"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="609dp"
+        android:layout_marginBottom="992dp"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/editTextText2"
+        android:layout_width="735dp"
+        android:layout_height="58dp"
+        android:layout_above="@+id/textView5"
+        android:layout_alignEnd="@+id/linearLayoutStudyTimerMotivationalQuote"
+        android:layout_marginEnd="66dp"
+        android:layout_marginBottom="856dp"
+        android:ems="10"
+        android:inputType="textLongMessage"
+        android:text="Name"
+        tools:text="You are                                      mins away from your goal" />
+
+</RelativeLayout>
+
