@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-        <item>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background layer: light gray -->
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="10dp"/>
+            <solid android:color="#D3D3D3"/>  <!-- Light gray -->
+        </shape>
+    </item>
 
-            <shape android:shape="rectangle">
-                <corners android:radius="10dp" />
-                <solid android:color="#302E32" />
+    <!-- Progress layer: pastel purple -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="10dp"/>
+                <solid android:color="#c3b1e1"/>  <!-- Pastel purple -->
             </shape>
-        </item>
-        <item android:id="@android:id/progress">
-
-            <clip>
-                <shape android:shape="rectangle">
-                    <corners android:radius="10dp" />
-                    <solid android:color="#c3b1e1" />
-                </shape>
-            </clip>
-        </item>
-    </layer-list>
+        </clip>
+    </item>
+</layer-list>

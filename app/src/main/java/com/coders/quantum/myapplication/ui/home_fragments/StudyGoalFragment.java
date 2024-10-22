@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.coders.quantum.myapplication.R;
 
@@ -93,6 +94,7 @@ public class StudyGoalFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_study_goal, container, false);
 
         ProgressBar progressBar = view.findViewById(R.id.progressBar);
+        progressBar.setProgress(0);
         TextView streakTextView = view.findViewById(R.id.streakTextView);
         TextView timeLeftTextView = view.findViewById(R.id.timeLeftTextView);
 
@@ -113,15 +115,24 @@ public class StudyGoalFragment extends Fragment {
         CheckBox reminderFriday = view.findViewById(R.id.reminderFriday);
         CheckBox reminderSaturday = view.findViewById(R.id.reminderSaturday);
 
-        Button saveButton = view.findViewById(R.id.saveReminderSettingsButton);
+        Button saveRemindersButton = view.findViewById(R.id.saveReminderSettingsButton);
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        saveRemindersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int startHour = startTimePicker.getHour();
                 int startMinute = startTimePicker.getMinute();
                 int endHour = endTimePicker.getHour();
                 int endMinute = endTimePicker.getMinute();
+
+                boolean[] selectedDays = new boolean[7];
+                selectedDays[0] = reminderSunday.isChecked();
+                selectedDays[1] = reminderMonday.isChecked();
+                selectedDays[2] = reminderTuesday.isChecked();
+                selectedDays[3] = reminderWednesday.isChecked();
+                selectedDays[4] = reminderThursday.isChecked();
+                selectedDays[5] = reminderFriday.isChecked();
+                selectedDays[6] = reminderSaturday.isChecked();
 
                 SharedPreferences sharedPref = getActivity().getSharedPreferences("StudyPrefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
@@ -139,6 +150,8 @@ public class StudyGoalFragment extends Fragment {
                 editor.putBoolean("reminderSaturday", reminderSaturday.isChecked());
 
                 editor.apply();
+                setHourlyReminders(startHour, startMinute, endHour, endMinute, selectedDays);
+                Toast.makeText(getContext(), "Reminders Set!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -156,11 +169,13 @@ public class StudyGoalFragment extends Fragment {
                 boolean goalMet = newTotalTime >= dailyGoal;
                 updateStreak(goalMet);
                 updateProgressBar(progressBar);
+                updateTimeLeft(timeLeftTextView);
 
                 int currentStreak = getActivity().getSharedPreferences("StudyPrefs",Context.MODE_PRIVATE).getInt("streak", 0);
                 streakTextView.setText("Current Streak: "+currentStreak);
 
-                updateTimeLeft(timeLeftTextView);
+                Toast.makeText(getContext(), "Time Added!", Toast.LENGTH_SHORT).show();
+
             }
 
         });
@@ -192,6 +207,8 @@ public class StudyGoalFragment extends Fragment {
                 setDailyGoalForDay("thursday", thursdayGoalValue);
                 setDailyGoalForDay("friday", fridayGoalValue);
                 setDailyGoalForDay("saturday", saturdayGoalValue);
+
+                Toast.makeText(getContext(), "Daily Goals Set!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -199,7 +216,34 @@ public class StudyGoalFragment extends Fragment {
     }
 
     private void updateTimeLeft(TextView timeLeftTextView){
-        int dailyGoal = getDailyGoal();
+        Calendar calendar = Calendar.getInstance();
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        String currentDay = "";
+
+        switch (dayOfWeek) {
+            case Calendar.SUNDAY:
+                currentDay = "sunday";
+                break;
+            case Calendar.MONDAY:
+                currentDay = "monday";
+                break;
+            case Calendar.TUESDAY:
+                currentDay = "tuesday";
+                break;
+            case Calendar.WEDNESDAY:
+                currentDay = "wednesday";
+                break;
+            case Calendar.THURSDAY:
+                currentDay = "thursday";
+                break;
+            case Calendar.FRIDAY:
+                currentDay = "friday";
+                break;
+            case Calendar.SATURDAY:
+                currentDay = "saturday";
+                break;
+        }
+        int dailyGoal = getDailyGoalForDay(currentDay);
         int minutesStudied = getMinutesStudiedToday();
 
         int minutesLeft = dailyGoal - minutesStudied;
@@ -219,27 +263,57 @@ public class StudyGoalFragment extends Fragment {
     }
 
     private void updateProgressBar(ProgressBar progressBar){
-        int dailyGoal = getDailyGoal(); //goal will be set in minutes
-        int minutesStudied = getMinutesStudiedToday();
-        int progress = (minutesStudied * 100)/ dailyGoal; //calc percent of goal complete
+        Calendar calendar = Calendar.getInstance();
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
-        if (progress > 100){
-            progress = 100;
+        String currentDay = "";
+
+        switch (dayOfWeek) {
+            case Calendar.SUNDAY:
+                currentDay = "sunday";
+                break;
+            case Calendar.MONDAY:
+                currentDay = "monday";
+                break;
+            case Calendar.TUESDAY:
+                currentDay = "tuesday";
+                break;
+            case Calendar.WEDNESDAY:
+                currentDay = "wednesday";
+                break;
+            case Calendar.THURSDAY:
+                currentDay = "thursday";
+                break;
+            case Calendar.FRIDAY:
+                currentDay = "friday";
+                break;
+            case Calendar.SATURDAY:
+                currentDay = "saturday";
+                break;
         }
 
-        progressBar.setProgress(progress);
+
+        int dailyGoal = getDailyGoalForDay(currentDay); //goal will be set in minutes
+        int minutesStudied = getMinutesStudiedToday();
+
+        if(dailyGoal>0){
+            int progress = (minutesStudied * 100)/ dailyGoal; //calc percent of goal complete
+
+            if (progress > 100){
+                progress = 100;
+            }
+
+            progressBar.setProgress(progress);
+        }
+        else {
+            progressBar.setProgress(0);
+        }
+
     }
 
     private int getMinutesStudiedToday() {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("StudyPrefs", Context.MODE_PRIVATE);
         return sharedPref.getInt("TimeStudiedToday", 0);
-    }
-
-    private void setDailyGoal(int goalMinutes) {
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("StudyPrefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("daily_goal", goalMinutes);
-        editor.apply();
     }
 
     private int getDailyGoal(){
@@ -273,29 +347,29 @@ public class StudyGoalFragment extends Fragment {
 
     }
 
-    private void setReminder(int hour, int minute, boolean[] days){
-        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-
-        //make alarms for the days user choose
-        for (int i = 0; i < days.length ; i++){
-            if (days[i]){
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.HOUR_OF_DAY, hour);
-                calendar.set(Calendar.MINUTE, minute);
-                calendar.set(Calendar.SECOND, 0);
-                calendar.set(Calendar.DAY_OF_WEEK, i + 1);
-
-                Intent intent = new Intent(getContext(), ReminderReceiver.class);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), i , intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-                        calendar.getTimeInMillis(),
-                        AlarmManager.INTERVAL_DAY * 7 , pendingIntent);
-            }
-        }
-
-    }
+//    private void setReminder(int hour, int minute, boolean[] days){
+//        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+//
+//        //make alarms for the days user choose
+//        for (int i = 0; i < days.length ; i++){
+//            if (days[i]){
+//                Calendar calendar = Calendar.getInstance();
+//                calendar.set(Calendar.HOUR_OF_DAY, hour);
+//                calendar.set(Calendar.MINUTE, minute);
+//                calendar.set(Calendar.SECOND, 0);
+//                calendar.set(Calendar.DAY_OF_WEEK, i + 1);
+//
+//                Intent intent = new Intent(getContext(), ReminderReceiver.class);
+//                PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), i , intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//
+//                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+//                        calendar.getTimeInMillis(),
+//                        AlarmManager.INTERVAL_DAY * 7 , pendingIntent);
+//            }
+//        }
+//
+//    }
     private void setHourlyReminders(int startHour, int startMinute, int endHour, int endMinute, boolean[] selectedDays){
         AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
         Calendar calendar = Calendar.getInstance();
@@ -325,32 +399,32 @@ public class StudyGoalFragment extends Fragment {
 
             createNotificationChannel(context);
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    // If permission is not granted, do nothing
+                    return;
+                }
+            }
+
             Calendar now = Calendar.getInstance();
             int currentHour = now.get(Calendar.HOUR_OF_DAY);
-            int currentMinute = now.get(Calendar.MINUTE);
 
             SharedPreferences sharedPref = context.getSharedPreferences("StudyPrefs", Context.MODE_PRIVATE);
             int startHour = sharedPref.getInt("startHour", 9);
             int endHour = sharedPref.getInt("endHour", 17);
 
-
-
-            if (context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            else{
-                if (currentHour >= startHour && currentHour < endHour){
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "StudyReminderChannel")
+            if (currentHour >= startHour && currentHour < endHour){
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "StudyReminderChannel")
                             .setSmallIcon(R.drawable.ic_launcher_background)
                             .setContentTitle("Study Reminder")
                             .setContentText("Time to Study!")
                             .setPriority(NotificationCompat.PRIORITY_HIGH);
 
-                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
-                    notificationManager.notify(1, builder.build());
-                }
+                notificationManager.notify(1, builder.build());
             }
+
 
 
 

@@ -1,11 +1,15 @@
 package com.coders.quantum.myapplication;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,6 +37,7 @@ public class HomeActivity extends AppCompatActivity {
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
 
+
         tabs.getTabAt(0).setIcon(R.drawable.star);  // Icon for Tab 1
         tabs.getTabAt(1).setIcon(R.drawable.home_icon);  // Icon for Tab 2
         tabs.getTabAt(2).setIcon(R.drawable.sketchbook);  // Icon for Tab 3
@@ -40,5 +45,16 @@ public class HomeActivity extends AppCompatActivity {
 
         viewPager.setCurrentItem(1);
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkCallingOrSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 101);
+            }
+        }
+
     }
+
+
+
+
+
 }
