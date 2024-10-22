@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.coders.quantum.myapplication.R;
 import com.coders.quantum.myapplication.ui.study_methods.HomeworkActivity;
 import com.coders.quantum.myapplication.ui.study_methods.QuizzesActivity;
+import com.coders.quantum.myapplication.ui.study_methods.StudyMethodActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,7 +61,7 @@ public class StudyMethodFragment extends Fragment {
         }
     }
 
-    Button btnHomework, btnQuizzes;
+    Button btnHomework, btnQuizzes, btnPomodoro, btnActiveRecall, btnBlurtingMethod,btnSpacedRepitition,btnMindMaps;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +71,11 @@ public class StudyMethodFragment extends Fragment {
 
         btnQuizzes = v.findViewById(R.id.btnStudyMethodQuizzes);
         btnHomework = v.findViewById(R.id.btnStudyMethodHomework);
+        btnPomodoro = v.findViewById(R.id.btnPomodoro);
+        btnActiveRecall = v.findViewById(R.id.btnAciveRecall);
+        btnBlurtingMethod = v.findViewById(R.id.btnBlurtingMethods);
+        btnSpacedRepitition = v.findViewById(R.id.btnSpacedRepitition);
+        btnMindMaps = v.findViewById(R.id.btnMindMaps);
 
         btnHomework.setOnClickListener(view->{
             Intent intent = new Intent(getActivity(), HomeworkActivity.class);
@@ -78,6 +84,67 @@ public class StudyMethodFragment extends Fragment {
 
         btnQuizzes.setOnClickListener(view->{
             Intent intent = new Intent(getActivity(), QuizzesActivity.class);
+            startActivity(intent);
+        });
+
+        btnPomodoro.setOnClickListener(view->{
+            Intent intent = new Intent(getActivity(), StudyMethodActivity.class);
+            intent.putExtra("name","pomodoro");
+            intent.putExtra("study_method","<h1>Pomodoro Technique:</h1>" +
+                    "      <ul>\n" +
+                    "        <li>Work for 25 minutes without distraction.</li>\n" +
+                    "        <li>Then take a short 5-minute break.</li>\n" +
+                    "        <li>After four work periods, take a longer break (15-30 minutes).</li>\n" +
+                    "        <li>This method helps you stay focused and avoid burnout.</li>\n" +
+                    "      </ul>");
+            startActivity(intent);
+        });
+
+        btnActiveRecall.setOnClickListener(view->{
+            Intent intent = new Intent(getActivity(), StudyMethodActivity.class);
+            intent.putExtra("name","active_recall");
+            intent.putExtra("study_method","<h1>Active Recall:</h1>\n" +
+                    "      <ul>\n" +
+                    "        <li>Test yourself on what you’re studying instead of just reading notes.</li>\n" +
+                    "        <li>Ask questions and try to remember the answers from memory.</li>\n" +
+                    "        <li>This helps strengthen your memory and shows you what you still need to review.</li>\n" +
+                    "      </ul>\n" +
+                    "    </li>");
+            startActivity(intent);
+        });
+
+        btnBlurtingMethod.setOnClickListener(view->{
+            Intent intent = new Intent(getActivity(), StudyMethodActivity.class);
+            intent.putExtra("name","blurting_method");
+            intent.putExtra("study_method","<h1>Blurting:</h1>\n" +
+                    "      <ul>\n" +
+                    "        <li>Write down everything you know about a topic without checking your notes.</li>\n" +
+                    "        <li>Afterward, look at what you missed and compare it with your notes.</li>\n" +
+                    "        <li>This shows where your knowledge is h1 and where you need more practice.</li>\n" +
+                    "      </ul>");
+            startActivity(intent);
+        });
+
+        btnSpacedRepitition.setOnClickListener(view->{
+            Intent intent = new Intent(getActivity(), StudyMethodActivity.class);
+            intent.putExtra("name","spaced_repetition");
+            intent.putExtra("study_method","<h1>Spaced Repetition:</h1>\n" +
+                    "      <ul>\n" +
+                    "        <li>Review information at different times: right after learning, after a day, after a week, etc.</li>\n" +
+                    "        <li>This method helps you remember things for a long time by using the brain’s natural forgetting process.</li>\n" +
+                    "      </ul>");
+            startActivity(intent);
+        });
+
+        btnMindMaps.setOnClickListener(view->{
+            Intent intent = new Intent(getActivity(), StudyMethodActivity.class);
+            intent.putExtra("name","mind_maps");
+            intent.putExtra("study_method","<h1>Mind Maps:</h1>\n" +
+                    "      <ul>\n" +
+                    "        <li>Create a visual diagram starting with one main idea.</li>\n" +
+                    "        <li>Branch out into related subtopics using keywords, pictures, or symbols.</li>\n" +
+                    "        <li>This helps you understand complex subjects and connect ideas easily.</li>\n" +
+                    "      </ul>");
             startActivity(intent);
         });
 

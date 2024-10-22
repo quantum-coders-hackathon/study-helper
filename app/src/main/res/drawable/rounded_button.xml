@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#D7BBFF"/> <!-- Light purple background color -->
+    <corners android:radius="25dp"/> <!-- Rounded corners -->
+    <padding
+        android:left="15dp"
+        android:top="10dp"
+        android:right="15dp"
+        android:bottom="10dp"/>
+    <size android:height="50dp" android:width="300dp"/> <!-- Button size -->
+    <stroke android:width="2dp" android:color="#B298FF"/> <!-- Optional border -->
+</shape>
