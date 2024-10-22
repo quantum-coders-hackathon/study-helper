@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.coders.quantum.myapplication.R;
-import com.coders.quantum.myapplication.ui.home_fragments.HomeFragment;
 import com.coders.quantum.myapplication.ui.home_fragments.StudyGoalFragment;
 import com.coders.quantum.myapplication.ui.home_fragments.StudyMethodFragment;
 import com.coders.quantum.myapplication.ui.home_fragments.StudyTimerFragment;
@@ -36,14 +35,14 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 return new StudyGoalFragment(); // First tab
+//            case 1:
+//                return new HomeFragment(); // Second tab
             case 1:
-                return new HomeFragment(); // Second tab
-            case 2:
                 return new StudyMethodFragment(); // Third tab
-            case 3:
+            case 2:
                 return new StudyTimerFragment(); // fourth tab
             default:
-                return new HomeFragment();
+                return new StudyTimerFragment();
         }
 //        return PlaceholderFragment.newInstance(position + 1);
     }
@@ -65,7 +64,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 2 total pages.
-        return 4;
+        return 3;
     }
 }

@@ -85,19 +85,25 @@ public class StudyGoalFragment extends Fragment {
         }
     }
 
+    SharedPreferences sharedPref;
+    TextView timeLeftTextView;
+    EditText sundayGoal, mondayGoal, tuesdayGoal, wednesdayGoal, thursdayGoal, fridayGoal, saturdayGoal;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_study_goal, container, false);
 
+        sharedPref = getActivity().getSharedPreferences("StudyPrefs", Context.MODE_PRIVATE);
+
         ProgressBar progressBar = view.findViewById(R.id.progressBar);
         progressBar.setProgress(0);
         TextView streakTextView = view.findViewById(R.id.streakTextView);
-        TextView timeLeftTextView = view.findViewById(R.id.timeLeftTextView);
+        timeLeftTextView = view.findViewById(R.id.timeLeftTextView);
 
-        updateProgressBar(progressBar);
         updateTimeLeft(timeLeftTextView);
+        updateProgressBar(progressBar);
 
         EditText timeInput = view.findViewById(R.id.timeInput);
         Button addTimeButton = view.findViewById(R.id.addTimeButton);
@@ -115,100 +121,100 @@ public class StudyGoalFragment extends Fragment {
 
         Button saveRemindersButton = view.findViewById(R.id.saveReminderSettingsButton);
 
-        saveRemindersButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int startHour = startTimePicker.getHour();
-                int startMinute = startTimePicker.getMinute();
-                int endHour = endTimePicker.getHour();
-                int endMinute = endTimePicker.getMinute();
+        saveRemindersButton.setOnClickListener(v -> {
+            int startHour = startTimePicker.getHour();
+            int startMinute = startTimePicker.getMinute();
+            int endHour = endTimePicker.getHour();
+            int endMinute = endTimePicker.getMinute();
 
-                boolean[] selectedDays = new boolean[7];
-                selectedDays[0] = reminderSunday.isChecked();
-                selectedDays[1] = reminderMonday.isChecked();
-                selectedDays[2] = reminderTuesday.isChecked();
-                selectedDays[3] = reminderWednesday.isChecked();
-                selectedDays[4] = reminderThursday.isChecked();
-                selectedDays[5] = reminderFriday.isChecked();
-                selectedDays[6] = reminderSaturday.isChecked();
+            boolean[] selectedDays = new boolean[7];
+            selectedDays[0] = reminderSunday.isChecked();
+            selectedDays[1] = reminderMonday.isChecked();
+            selectedDays[2] = reminderTuesday.isChecked();
+            selectedDays[3] = reminderWednesday.isChecked();
+            selectedDays[4] = reminderThursday.isChecked();
+            selectedDays[5] = reminderFriday.isChecked();
+            selectedDays[6] = reminderSaturday.isChecked();
 
-                SharedPreferences sharedPref = getActivity().getSharedPreferences("StudyPrefs", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("startHour", startHour);
-                editor.putInt("startMinute", startMinute);
-                editor.putInt("endHour", endHour);
-                editor.putInt("endMinute", endMinute);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("startHour", startHour);
+            editor.putInt("startMinute", startMinute);
+            editor.putInt("endHour", endHour);
+            editor.putInt("endMinute", endMinute);
 
-                editor.putBoolean("reminderSunday", reminderSunday.isChecked());
-                editor.putBoolean("reminderMonday", reminderMonday.isChecked());
-                editor.putBoolean("reminderTuesday", reminderTuesday.isChecked());
-                editor.putBoolean("reminderWednesday", reminderWednesday.isChecked());
-                editor.putBoolean("reminderThursday", reminderThursday.isChecked());
-                editor.putBoolean("reminderFriday", reminderFriday.isChecked());
-                editor.putBoolean("reminderSaturday", reminderSaturday.isChecked());
+            editor.putBoolean("reminderSunday", reminderSunday.isChecked());
+            editor.putBoolean("reminderMonday", reminderMonday.isChecked());
+            editor.putBoolean("reminderTuesday", reminderTuesday.isChecked());
+            editor.putBoolean("reminderWednesday", reminderWednesday.isChecked());
+            editor.putBoolean("reminderThursday", reminderThursday.isChecked());
+            editor.putBoolean("reminderFriday", reminderFriday.isChecked());
+            editor.putBoolean("reminderSaturday", reminderSaturday.isChecked());
 
-                editor.apply();
-                setHourlyReminders(startHour, startMinute, endHour, endMinute, selectedDays);
-                Toast.makeText(getContext(), "Reminders Set!", Toast.LENGTH_SHORT).show();
-            }
+            editor.apply();
+            setHourlyReminders(startHour, startMinute, endHour, endMinute, selectedDays);
+            Toast.makeText(getContext(), "Reminders Set!", Toast.LENGTH_SHORT).show();
         });
 
-        addTimeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //get time
-                int addedTime = Integer.parseInt(timeInput.getText().toString());
-                //add the time
-                int currentTimeStudied = getMinutesStudiedToday();
-                int newTotalTime = currentTimeStudied + addedTime;
-                storeNewStudyTime(newTotalTime);
+        addTimeButton.setOnClickListener(v -> {
+            //get time
+            int addedTime = Integer.parseInt(timeInput.getText().toString());
+            //add the time
+            int currentTimeStudied = getMinutesStudiedToday();
+            int newTotalTime = currentTimeStudied + addedTime;
+            storeNewStudyTime(newTotalTime);
 
-                int dailyGoal = getDailyGoal();
-                boolean goalMet = newTotalTime >= dailyGoal;
-                updateStreak(goalMet);
-                updateProgressBar(progressBar);
-                updateTimeLeft(timeLeftTextView);
+            int dailyGoal = getDailyGoal();
+            boolean goalMet = newTotalTime >= dailyGoal;
+            updateStreak(goalMet);
+            updateProgressBar(progressBar);
+            updateTimeLeft(timeLeftTextView);
 
-                int currentStreak = getActivity().getSharedPreferences("StudyPrefs",Context.MODE_PRIVATE).getInt("streak", 0);
-                streakTextView.setText("Current Streak: "+currentStreak);
+            int currentStreak = getActivity().getSharedPreferences("StudyPrefs",Context.MODE_PRIVATE).getInt("streak", 0);
+            streakTextView.setText("Current Streak: "+currentStreak);
 
-                Toast.makeText(getContext(), "Time Added!", Toast.LENGTH_SHORT).show();
-
-            }
+            Toast.makeText(getContext(), "Time Added!", Toast.LENGTH_SHORT).show();
 
         });
 
-        EditText sundayGoal = view.findViewById(R.id.sundayGoal);
-        EditText mondayGoal = view.findViewById(R.id.mondayGoal);
-        EditText tuesdayGoal = view.findViewById(R.id.tuesdayGoal);
-        EditText wednesdayGoal = view.findViewById(R.id.wednesdayGoal);
-        EditText thursdayGoal = view.findViewById(R.id.thursdayGoal);
-        EditText fridayGoal = view.findViewById(R.id.fridayGoal);
-        EditText saturdayGoal = view.findViewById(R.id.saturdayGoal);
+        int currentStreak = getActivity().getSharedPreferences("StudyPrefs",Context.MODE_PRIVATE).getInt("streak", 0);
+        streakTextView.setText("Current Streak: "+currentStreak);
+
+        sundayGoal = view.findViewById(R.id.sundayGoal);
+        mondayGoal = view.findViewById(R.id.mondayGoal);
+        tuesdayGoal = view.findViewById(R.id.tuesdayGoal);
+        wednesdayGoal = view.findViewById(R.id.wednesdayGoal);
+        thursdayGoal = view.findViewById(R.id.thursdayGoal);
+        fridayGoal = view.findViewById(R.id.fridayGoal);
+        saturdayGoal = view.findViewById(R.id.saturdayGoal);
         Button setGoalsButton = view.findViewById(R.id.setGoalsButton);
 
-        setGoalsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int sundayGoalValue = Integer.parseInt(sundayGoal.getText().toString());
-                int mondayGoalValue = Integer.parseInt(mondayGoal.getText().toString());
-                int tuesdayGoalValue = Integer.parseInt(tuesdayGoal.getText().toString());
-                int wednesdayGoalValue = Integer.parseInt(wednesdayGoal.getText().toString());
-                int thursdayGoalValue = Integer.parseInt(thursdayGoal.getText().toString());
-                int fridayGoalValue = Integer.parseInt(fridayGoal.getText().toString());
-                int saturdayGoalValue = Integer.parseInt(saturdayGoal.getText().toString());
+        setGoalsButton.setOnClickListener(v -> {
+            int mondayGoalValue = Integer.parseInt(mondayGoal.getText().toString());
+            int tuesdayGoalValue = Integer.parseInt(tuesdayGoal.getText().toString());
+            int sundayGoalValue = Integer.parseInt(sundayGoal.getText().toString());
+            int wednesdayGoalValue = Integer.parseInt(wednesdayGoal.getText().toString());
+            int thursdayGoalValue = Integer.parseInt(thursdayGoal.getText().toString());
+            int fridayGoalValue = Integer.parseInt(fridayGoal.getText().toString());
+            int saturdayGoalValue = Integer.parseInt(saturdayGoal.getText().toString());
 
-                setDailyGoalForDay("sunday", sundayGoalValue);
-                setDailyGoalForDay("monday", mondayGoalValue);
-                setDailyGoalForDay("tuesday", tuesdayGoalValue);
-                setDailyGoalForDay("wednesday", wednesdayGoalValue);
-                setDailyGoalForDay("thursday", thursdayGoalValue);
-                setDailyGoalForDay("friday", fridayGoalValue);
-                setDailyGoalForDay("saturday", saturdayGoalValue);
+            setDailyGoalForDay("sunday", sundayGoalValue);
+            setDailyGoalForDay("monday", mondayGoalValue);
+            setDailyGoalForDay("tuesday", tuesdayGoalValue);
+            setDailyGoalForDay("wednesday", wednesdayGoalValue);
+            setDailyGoalForDay("thursday", thursdayGoalValue);
+            setDailyGoalForDay("friday", fridayGoalValue);
+            setDailyGoalForDay("saturday", saturdayGoalValue);
 
-                Toast.makeText(getContext(), "Daily Goals Set!", Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(getContext(), "Daily Goals Set!", Toast.LENGTH_SHORT).show();
         });
+
+        sundayGoal.setText(String.valueOf(getDailyGoalForDay("sunday")));
+        mondayGoal.setText(String.valueOf(getDailyGoalForDay("monday")));
+        tuesdayGoal.setText(String.valueOf(getDailyGoalForDay("tuesday")));
+        wednesdayGoal.setText(String.valueOf(getDailyGoalForDay("wednesday")));
+        thursdayGoal.setText(String.valueOf(getDailyGoalForDay("thursday")));
+        fridayGoal.setText(String.valueOf(getDailyGoalForDay("friday")));
+        saturdayGoal.setText(String.valueOf(getDailyGoalForDay("saturday")));
 
         return view;
     }
@@ -254,7 +260,6 @@ public class StudyGoalFragment extends Fragment {
     }
 
     private void storeNewStudyTime(int newTime){
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("StudyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("TimeStudiedToday" , newTime);
         editor.apply();
@@ -302,6 +307,10 @@ public class StudyGoalFragment extends Fragment {
             }
 
             progressBar.setProgress(progress);
+
+            if (progress == 100) {
+                timeLeftTextView.setText("Studied : "+minutesStudied+" minutes");
+            }
         }
         else {
             progressBar.setProgress(0);
@@ -310,18 +319,15 @@ public class StudyGoalFragment extends Fragment {
     }
 
     private int getMinutesStudiedToday() {
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("StudyPrefs", Context.MODE_PRIVATE);
         return sharedPref.getInt("TimeStudiedToday", 0);
     }
 
     private int getDailyGoal(){
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("StudyPrefs", Context.MODE_PRIVATE);
         return sharedPref.getInt("daily_goal", 120); //default of 120 mins
     }
 
     //streak counter and updater
     private void updateStreak(boolean goalMet) {
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("StudyPrefs",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
         int currentStreak = sharedPref.getInt("streak",0);
@@ -399,7 +405,6 @@ public class StudyGoalFragment extends Fragment {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                    // If permission is not granted, do nothing
                     return;
                 }
             }
@@ -407,7 +412,6 @@ public class StudyGoalFragment extends Fragment {
             Calendar now = Calendar.getInstance();
             int currentHour = now.get(Calendar.HOUR_OF_DAY);
 
-            SharedPreferences sharedPref = context.getSharedPreferences("StudyPrefs", Context.MODE_PRIVATE);
             int startHour = sharedPref.getInt("startHour", 9);
             int endHour = sharedPref.getInt("endHour", 17);
 
@@ -462,14 +466,12 @@ public class StudyGoalFragment extends Fragment {
     }
 
     private void setDailyGoalForDay(String day, int goalMinutes){
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("StudyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(day + "_goal", goalMinutes);
         editor.apply();
     }
 
     private int getDailyGoalForDay(String day){
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("StudyPrefs", Context.MODE_PRIVATE);
         return sharedPref.getInt(day + "_goal", 120);
     }
 

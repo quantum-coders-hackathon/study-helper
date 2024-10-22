@@ -50,8 +50,9 @@
 
                 <LinearLayout
                     android:id="@+id/streakTimeLeftLayout"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
                     android:orientation="horizontal"
                     app:layout_constraintTop_toBottomOf="@id/progressBar"
                     app:layout_constraintBottom_toTopOf="@id/addTimeLayout"
@@ -60,11 +61,9 @@
 
                     <TextView
                         android:id="@+id/streakTextView"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
                         android:text="Current Streak: 0"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/streakTimeLeftLayout"
@@ -74,53 +73,38 @@
 
                     <TextView
                         android:id="@+id/timeLeftTextView"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginLeft="160dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
                         android:text="Minutes Left: 0"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="@id/streakTimeLeftLayout"
-                        app:layout_constraintStart_toEndOf="@+id/streakTextView"
-                        app:layout_constraintTop_toTopOf="@id/streakTimeLeftLayout"
-                        app:layout_constraintBottom_toBottomOf="@id/streakTimeLeftLayout"/>
+                        android:textStyle="bold"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/addTimeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/streakTimeLeftLayout"
-                    app:layout_constraintBottom_toBottomOf="@id/progressBarAddTimeLayout"
-                    app:layout_constraintStart_toStartOf="@id/progressBarAddTimeLayout"
-                    app:layout_constraintEnd_toEndOf="@id/progressBarAddTimeLayout">
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal">
 
                     <EditText
                         android:id="@+id/timeInput"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
+                        android:layout_weight="1"
                         android:hint="Enter Time Studied (min)"
-                        app:layout_constraintBottom_toBottomOf="@+id/addTimeLayout"
-                        app:layout_constraintStart_toStartOf="@id/addTimeLayout"
-                        app:layout_constraintEnd_toStartOf="@id/addTimeButton"
-                        app:layout_constraintTop_toTopOf="@id/addTimeLayout"/>
+                        android:inputType="number"/>
 
                     <Button
                         android:id="@+id/addTimeButton"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="2"
                         android:text="Add Time"
                         android:layout_gravity="center"
-                        android:gravity="center"
-                        app:layout_constraintBottom_toBottomOf="@id/addTimeLayout"
-                        app:layout_constraintEnd_toEndOf="@id/addTimeLayout"
-                        app:layout_constraintStart_toEndOf="@+id/timeInput"
-                        app:layout_constraintTop_toTopOf="@+id/addTimeLayout"
-                        />
+                        android:gravity="center"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -135,11 +119,11 @@
 
                 <TextView
                     android:id="@+id/setDailyGoalsMins"
-                    android:layout_width="367dp"
-                    android:layout_height="33dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="Choose Individual Goals For Each Day:"
+                    android:text="Choose Individual Goals For Each Day (in minutes):"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     />
@@ -166,42 +150,29 @@
                             android:id="@+id/sundayGoal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Sunday Goal (min)"
-                            app:layout_constraintBottom_toTopOf="@+id/mondayGoal"
-                            app:layout_constraintEnd_toEndOf="@id/setGoalsColumnLeft"
-                            app:layout_constraintStart_toStartOf="@id/setGoalsColumnLeft"
-                            app:layout_constraintTop_toTopOf="@+id/setGoalsColumnLeft"
-                            />
+                            android:hint="Sunday Goal"
+                            android:inputType="number" />
 
                         <EditText
                             android:id="@+id/mondayGoal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Monday Goal (min)"
-                            app:layout_constraintBottom_toTopOf="@+id/tuesdayGoal"
-                            app:layout_constraintEnd_toEndOf="@id/setGoalsColumnLeft"
-                            app:layout_constraintStart_toStartOf="@id/setGoalsColumnLeft"
-                            app:layout_constraintTop_toBottomOf="@+id/sundayGoal" />
+                            android:hint="Monday Goal"
+                            android:inputType="number" />
 
                         <EditText
                             android:id="@+id/tuesdayGoal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Tuesday Goal (min)"
-                            app:layout_constraintBottom_toTopOf="@+id/wednesdayGoal"
-                            app:layout_constraintEnd_toEndOf="@id/setGoalsColumnLeft"
-                            app:layout_constraintStart_toStartOf="@id/setGoalsColumnLeft"
-                            app:layout_constraintTop_toBottomOf="@+id/mondayGoal" />
+                            android:hint="Tuesday Goal"
+                            android:inputType="number" />
 
                         <EditText
                             android:id="@+id/wednesdayGoal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Wednesday Goal (min)"
-                            app:layout_constraintBottom_toBottomOf="@+id/setGoalsColumnLeft"
-                            app:layout_constraintEnd_toEndOf="@+id/setGoalsColumnLeft"
-                            app:layout_constraintStart_toStartOf="@+id/setGoalsColumnLeft"
-                            app:layout_constraintTop_toBottomOf="@+id/tuesdayGoal" />
+                            android:hint="Wednesday Goal"
+                            android:inputType="number" />
 
                     </LinearLayout>
 
@@ -220,32 +191,23 @@
                             android:id="@+id/thursdayGoal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Thursday Goal (min)"
-                            app:layout_constraintBottom_toTopOf="@id/fridayGoal"
-                            app:layout_constraintEnd_toEndOf="@id/setGoalsColumnRight"
-                            app:layout_constraintStart_toStartOf="@id/setGoalsColumnRight"
-                            app:layout_constraintTop_toTopOf="@id/setGoalsColumnRight" />
+                            android:hint="Thursday Goal"
+                            android:inputType="number" />
 
                         <EditText
                             android:id="@+id/fridayGoal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Friday Goal (min)"
-                            app:layout_constraintBottom_toTopOf="@id/saturdayGoal"
-                            app:layout_constraintEnd_toEndOf="@id/setGoalsColumnRight"
-                            app:layout_constraintStart_toStartOf="@id/setGoalsColumnRight"
-                            app:layout_constraintTop_toBottomOf="@id/thursdayGoal"
+                            android:hint="Friday Goal"
+                            android:inputType="number"
                             />
 
                         <EditText
                             android:id="@+id/saturdayGoal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Saturday Goal (min)"
-                            app:layout_constraintBottom_toTopOf="@id/setGoalsButton"
-                            app:layout_constraintEnd_toEndOf="@id/setGoalsColumnRight"
-                            app:layout_constraintStart_toStartOf="@id/setGoalsColumnRight"
-                            app:layout_constraintTop_toBottomOf="@id/fridayGoal"
+                            android:hint="Saturday Goal"
+                            android:inputType="number"
                             />
 
                         <Button

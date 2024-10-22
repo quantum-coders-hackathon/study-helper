@@ -30,11 +30,11 @@ public class HomeActivity extends AppCompatActivity {
 
 
         tabs.getTabAt(0).setIcon(R.drawable.star);  // Icon for Tab 1
-        tabs.getTabAt(1).setIcon(R.drawable.home_icon);  // Icon for Tab 2
-        tabs.getTabAt(2).setIcon(R.drawable.sketchbook);  // Icon for Tab 3
-        tabs.getTabAt(3).setIcon(R.drawable.baseline_watch_later_24);  // Icon for Tab 4
+//        tabs.getTabAt(1).setIcon(R.drawable.home_icon);  // Icon for Tab 2
+        tabs.getTabAt(1).setIcon(R.drawable.sketchbook);  // Icon for Tab 3
+        tabs.getTabAt(2).setIcon(R.drawable.baseline_watch_later_24);  // Icon for Tab 4
 
-        viewPager.setCurrentItem(1);
+        viewPager.setCurrentItem(2);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (checkCallingOrSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
