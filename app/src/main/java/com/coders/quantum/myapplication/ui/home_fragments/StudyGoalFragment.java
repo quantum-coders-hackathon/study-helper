@@ -116,54 +116,47 @@ public class StudyGoalFragment extends Fragment {
 
         Button saveButton = view.findViewById(R.id.saveReminderSettingsButton);
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int startHour = startTimePicker.getHour();
-                int startMinute = startTimePicker.getMinute();
-                int endHour = endTimePicker.getHour();
-                int endMinute = endTimePicker.getMinute();
+        saveButton.setOnClickListener(v -> {
+            int startHour = startTimePicker.getHour();
+            int startMinute = startTimePicker.getMinute();
+            int endHour = endTimePicker.getHour();
+            int endMinute = endTimePicker.getMinute();
 
-                SharedPreferences sharedPref = getActivity().getSharedPreferences("StudyPrefs", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("startHour", startHour);
-                editor.putInt("startMinute", startMinute);
-                editor.putInt("endHour", endHour);
-                editor.putInt("endMinute", endMinute);
+            SharedPreferences sharedPref = getActivity().getSharedPreferences("StudyPrefs", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("startHour", startHour);
+            editor.putInt("startMinute", startMinute);
+            editor.putInt("endHour", endHour);
+            editor.putInt("endMinute", endMinute);
 
-                editor.putBoolean("reminderSunday", reminderSunday.isChecked());
-                editor.putBoolean("reminderMonday", reminderMonday.isChecked());
-                editor.putBoolean("reminderTuesday", reminderTuesday.isChecked());
-                editor.putBoolean("reminderWednesday", reminderWednesday.isChecked());
-                editor.putBoolean("reminderThursday", reminderThursday.isChecked());
-                editor.putBoolean("reminderFriday", reminderFriday.isChecked());
-                editor.putBoolean("reminderSaturday", reminderSaturday.isChecked());
+            editor.putBoolean("reminderSunday", reminderSunday.isChecked());
+            editor.putBoolean("reminderMonday", reminderMonday.isChecked());
+            editor.putBoolean("reminderTuesday", reminderTuesday.isChecked());
+            editor.putBoolean("reminderWednesday", reminderWednesday.isChecked());
+            editor.putBoolean("reminderThursday", reminderThursday.isChecked());
+            editor.putBoolean("reminderFriday", reminderFriday.isChecked());
+            editor.putBoolean("reminderSaturday", reminderSaturday.isChecked());
 
-                editor.apply();
-            }
+            editor.apply();
         });
 
-        addTimeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //get time
-                int addedTime = Integer.parseInt(timeInput.getText().toString());
-                //add the time
-                int currentTimeStudied = getMinutesStudiedToday();
-                int newTotalTime = currentTimeStudied + addedTime;
-                storeNewStudyTime(newTotalTime);
+        addTimeButton.setOnClickListener(v -> {
+            //get time
+            int addedTime = Integer.parseInt(timeInput.getText().toString());
+            //add the time
+            int currentTimeStudied = getMinutesStudiedToday();
+            int newTotalTime = currentTimeStudied + addedTime;
+            storeNewStudyTime(newTotalTime);
 
-                int dailyGoal = getDailyGoal();
-                boolean goalMet = newTotalTime >= dailyGoal;
-                updateStreak(goalMet);
-                updateProgressBar(progressBar);
+            int dailyGoal = getDailyGoal();
+            boolean goalMet = newTotalTime >= dailyGoal;
+            updateStreak(goalMet);
+            updateProgressBar(progressBar);
 
-                int currentStreak = getActivity().getSharedPreferences("StudyPrefs",Context.MODE_PRIVATE).getInt("streak", 0);
-                streakTextView.setText("Current Streak: "+currentStreak);
+            int currentStreak = getActivity().getSharedPreferences("StudyPrefs",Context.MODE_PRIVATE).getInt("streak", 0);
+            streakTextView.setText("Current Streak: "+currentStreak);
 
-                updateTimeLeft(timeLeftTextView);
-            }
-
+            updateTimeLeft(timeLeftTextView);
         });
 
         EditText sundayGoal = view.findViewById(R.id.sundayGoal);
