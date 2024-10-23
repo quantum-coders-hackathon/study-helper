@@ -137,91 +137,124 @@
 
                     <LinearLayout
                         android:id="@+id/setGoalsColumnLeft"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_weight="1"
-                        app:layout_constraintTop_toTopOf="@id/bothSetGoalsColumnsLayout"
-                        app:layout_constraintBottom_toBottomOf="@id/bothSetGoalsColumnsLayout"
-                        app:layout_constraintStart_toStartOf="@id/bothSetGoalsColumnsLayout"
-                        app:layout_constraintEnd_toStartOf="@id/setGoalsColumnRight">
+                        android:layout_weight="1">
 
-                        <EditText
-                            android:id="@+id/sundayGoal"
+                        <!-- Sunday Goal -->
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Sunday Goal"
-                            android:inputType="number" />
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                        <EditText
-                            android:id="@+id/mondayGoal"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/sundayGoal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Monday Goal -->
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Monday Goal"
-                            android:inputType="number" />
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                        <EditText
-                            android:id="@+id/tuesdayGoal"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/mondayGoal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Tuesday Goal -->
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Tuesday Goal"
-                            android:inputType="number" />
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                        <EditText
-                            android:id="@+id/wednesdayGoal"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/tuesdayGoal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Wednesday Goal -->
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Wednesday Goal"
-                            android:inputType="number" />
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/wednesdayGoal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/setGoalsColumnRight"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_weight="1"
-                        app:layout_constraintTop_toTopOf="@id/bothSetGoalsColumnsLayout"
-                        app:layout_constraintBottom_toBottomOf="@id/bothSetGoalsColumnsLayout"
-                        app:layout_constraintStart_toEndOf="@id/setGoalsColumnLeft"
-                        app:layout_constraintEnd_toEndOf="@id/bothSetGoalsColumnsLayout">
+                        android:layout_weight="1">
 
-                        <EditText
-                            android:id="@+id/thursdayGoal"
+                        <!-- Thursday Goal -->
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Thursday Goal"
-                            android:inputType="number" />
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                        <EditText
-                            android:id="@+id/fridayGoal"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/thursdayGoal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Friday Goal -->
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Friday Goal"
-                            android:inputType="number"
-                            />
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                        <EditText
-                            android:id="@+id/saturdayGoal"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/fridayGoal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Saturday Goal -->
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Saturday Goal"
-                            android:inputType="number"
-                            />
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/saturdayGoal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
                         <Button
                             android:id="@+id/setGoalsButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="30dp"
-                            android:text="Set Goals"
-                            app:layout_constraintBottom_toBottomOf="@+id/setGoalsColumnRight"
-                            app:layout_constraintEnd_toEndOf="@id/setGoalsColumnRight"
-                            app:layout_constraintStart_toStartOf="@+id/setGoalsColumnRight"
-                            app:layout_constraintTop_toBottomOf="@id/saturdayGoal"
-                            />
-
+                            android:text="Set Goals" />
                     </LinearLayout>
 
                 </LinearLayout>
