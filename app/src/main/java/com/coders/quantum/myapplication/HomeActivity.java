@@ -29,9 +29,9 @@ public class HomeActivity extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
 
 
-        tabs.getTabAt(0).setIcon(R.drawable.star);  // Icon for Tab 1
+        tabs.getTabAt(0).setIcon(R.drawable.rising_icon);  // Icon for Tab 1
 //        tabs.getTabAt(1).setIcon(R.drawable.home_icon);  // Icon for Tab 2
-        tabs.getTabAt(1).setIcon(R.drawable.sketchbook);  // Icon for Tab 3
+        tabs.getTabAt(1).setIcon(R.drawable.book_icon);  // Icon for Tab 3
         tabs.getTabAt(2).setIcon(R.drawable.baseline_watch_later_24);  // Icon for Tab 4
 
         viewPager.setCurrentItem(2);
